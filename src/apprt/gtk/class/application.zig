@@ -1004,6 +1004,11 @@ pub const Application = extern struct {
             \\  );
             \\}
             \\
+            \\
+            \\.surface progressbar.paused trough progress {
+            \\  background-color: rgba(235, 141, 0, 0.5);
+            \\ }
+            \\
             \\.surface .bell-overlay {
             \\  border-color: color-mix(
             \\    in srgb,

@@ -1023,6 +1023,11 @@ pub const Surface = extern struct {
         }
 
         const progress_bar = priv.progress_bar_overlay;
+
+        // remove all possible states, as the new one is set below
+        progress_bar.as(gtk.Widget).removeCssClass("error");
+        progress_bar.as(gtk.Widget).removeCssClass("paused");
+
         switch (value.state) {
             // Remove the progress bar
             .remove => {
@@ -1033,7 +1038,6 @@ pub const Surface = extern struct {
             // Set the progress bar to a fixed value if one was provided, otherwise pulse.
             // Remove the `error` CSS class so that the progress bar shows as normal.
             .set => {
-                progress_bar.as(gtk.Widget).removeCssClass("error");
                 if (value.progress) |progress| {
                     progress_bar.setFraction(computeFraction(progress));
                 } else {
@@ -1063,6 +1067,7 @@ pub const Surface = extern struct {
             // happening. Otherwise this is mainly used to keep the progress bar on
             // screen instead of timing out.
             .pause => {
+                progress_bar.as(gtk.Widget).addCssClass("paused");
                 if (value.progress) |progress| {
                     progress_bar.setFraction(computeFraction(progress));
                 }
